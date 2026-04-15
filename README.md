@@ -15,6 +15,8 @@
 │   └── chat_client.py # LLM 聊天客户端（支持流式输出和历史记录）
 ├── practice02/        # 练习目录（支持工具调用）
 │   └── chat_client_with_tools.py # LLM 聊天客户端（支持工具调用和curl网络访问）
+├── practice03/        # 练习目录（支持聊天记录总结）
+│   └── chat_client_with_summary.py # LLM 聊天客户端（支持工具调用和聊天记录总结）
 ├── tool_chat_client.py # LLM 聊天客户端（支持工具调用和curl网络访问）
 ├── venv/              # 虚拟环境
 └── requirements.txt   # 依赖包配置
@@ -135,6 +137,38 @@
 - `call_llm_stream()`: 流式调用 LLM API（支持工具调用）
 - `main()`: 主函数，处理用户输入、工具调用和聊天循环
 
+### 6. practice03/chat_client_with_summary.py
+
+**功能用途**：
+- 读取项目根目录的 `.env` 配置文件
+- 提供终端界面进行聊天交互
+- 支持工具调用功能
+- 支持curl网络访问功能
+- 支持流式输出（逐字显示）
+- 自动保存历史聊天记录到上下文
+- 当聊天超过5轮或上下文超过3k时，主动触发聊天记录总结
+- 对前70%左右的内容进行压缩，最后30%左右的内容保留原文
+- 支持 Ctrl+C 退出
+
+**教学目标**：
+- 学习如何实现聊天记录总结功能
+- 了解如何管理和压缩聊天上下文
+- 掌握触发条件的设置和判断
+- 学习如何使用LLM进行内容总结
+
+**核心功能**：
+- `load_dotenv()`: 从项目根目录加载 .env 文件
+- `list_files()`: 列出目录下的文件
+- `rename_file()`: 重命名文件
+- `delete_file()`: 删除文件
+- `create_file()`: 创建文件
+- `read_file()`: 读取文件内容
+- `curl_request()`: 通过curl访问网页并返回内容
+- `call_llm_stream()`: 流式调用 LLM API（支持工具调用）
+- `calculate_context_length()`: 计算聊天上下文的长度
+- `summarize_chat_history()`: 总结聊天历史记录
+- `main()`: 主函数，处理用户输入、工具调用、聊天记录总结和聊天循环
+
 ## 环境配置
 
 1. **创建虚拟环境**：
@@ -223,6 +257,23 @@ python tool_chat_client.py
 3. 如果助手需要调用工具，会自动执行并显示结果
 4. 继续输入新的问题
 5. 按 Ctrl+C 退出聊天
+
+### 运行 practice03/chat_client_with_summary.py
+
+```powershell
+cd practice03
+python chat_client_with_summary.py
+```
+
+**功能**：启动支持工具调用和聊天记录总结的交互式聊天客户端。
+
+**使用方法**：
+1. 输入你的问题或消息
+2. 等待助手的响应（流式输出）
+3. 如果助手需要调用工具，会自动执行并显示结果
+4. 当聊天超过5轮或上下文超过3k时，系统会自动触发聊天记录总结
+5. 继续输入新的问题
+6. 按 Ctrl+C 退出聊天
 
 ## 配置说明
 
